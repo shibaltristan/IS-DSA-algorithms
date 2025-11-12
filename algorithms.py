@@ -20,9 +20,13 @@ def quick_sort(items: List[Any], key: Callable[[Any], Any] = lambda x: x, revers
     if len(items) <= 1:
         return items[:]
     pivot = key(items[len(items) // 2])
-    left = [x for x in items if (key(x) > pivot) if reverse else (key(x) < pivot)]
+    if reverse:
+        left = [x for x in items if key(x) > pivot]
+        right = [x for x in items if key(x) < pivot]
+    else:
+        left = [x for x in items if key(x) < pivot]
+        right = [x for x in items if key(x) > pivot]
     middle = [x for x in items if key(x) == pivot]
-    right = [x for x in items if (key(x) < pivot) if reverse else (key(x) > pivot)]
     return quick_sort(left, key, reverse) + middle + quick_sort(right, key, reverse)
 
 
